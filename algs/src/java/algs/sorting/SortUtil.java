@@ -25,6 +25,10 @@ public class SortUtil {
         return x.compareTo(y) < 0;
     }
 
+    public static <T extends Comparable<? super T>> boolean lessOrEq(T x, T y) {
+        return x.compareTo(y) <= 0;
+    }
+
     public static <T extends Comparable<? super T>> void print(T[] a) {
         for (T x : a) StdOut.println(x);
     }
