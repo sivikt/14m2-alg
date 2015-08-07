@@ -12,7 +12,7 @@ package algs.assignments.jam;
  *
  * """ (from materials by Robert Sedgewick)
  */
-public class UFESuccessorWithDelete {
+public class UFSuccessorWithDelete {
 
     private int count;
     private int[] ids;
@@ -20,7 +20,7 @@ public class UFESuccessorWithDelete {
     private int[] successors;
     private boolean[] removed;
 
-    public UFESuccessorWithDelete(int N) {
+    public UFSuccessorWithDelete(int N) {
         ids = new int[N];
         sizes = new int[N];
         removed = new boolean[N];
@@ -98,7 +98,7 @@ public class UFESuccessorWithDelete {
 
     // testing
     public static void main(String[] args) {
-        UFESuccessorWithDelete uf = new UFESuccessorWithDelete(10);
+        UFSuccessorWithDelete uf = new UFSuccessorWithDelete(10);
 
         uf.remove(5);
         uf.remove(9);

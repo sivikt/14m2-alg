@@ -16,14 +16,14 @@ import static java.lang.Math.max;
  *
  * """ (from materials by Robert Sedgewick)
  */
-public class UFEWithCanonicalElement implements UF {
+public class UFWithCanonicalElement implements UF {
 
     private int count;
     private int[] ids;
     private int[] sizes;
     private int[] maximums;
 
-    public UFEWithCanonicalElement(int N) {
+    public UFWithCanonicalElement(int N) {
         ids = new int[N];
         sizes = new int[N];
         maximums = new int[N];
@@ -83,7 +83,7 @@ public class UFEWithCanonicalElement implements UF {
 
     // testing
     public static void main(String[] args) {
-        UFEWithCanonicalElement uf = new UFEWithCanonicalElement(10);
+        UFWithCanonicalElement uf = new UFWithCanonicalElement(10);
         uf.union(0, 1);
         uf.union(1, 4);
         uf.union(2, 7);
