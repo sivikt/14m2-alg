@@ -10,6 +10,7 @@ import java.util.Random;
  *
  *    Hint: design a linear-time subroutine that can take two uniformly shuffled linked lists of sizes N1
  *          and N2 and combined them into a uniformly shuffled linked lists of size N1+N2.
+ *
  * """ (from materials by Robert Sedgewick)
  *
  * @author Serj Sintsov
@@ -78,7 +79,7 @@ public class LinkedListShuffling {
     /**
      * Merge two uniformly shuffled linked lists of different sizes.
      */
-    public static <Item> Node<Item> merge(Node<Item> l1, int l1Sz, Node<Item> l2, int l2Sz) {
+    private static <Item> Node<Item> merge(Node<Item> l1, int l1Sz, Node<Item> l2, int l2Sz) {
         Random rnd = new Random();
 
         Node<Item> dummy = new Node<>();
