@@ -17,7 +17,6 @@ import java.util.Iterator;
  */
 public class FixedArrayBinaryHeapPQ<Key> implements PriorityQueue<Key>
 {
-    
     private final Comparator<Key> keyCmptr;
     private Key[] pq;
     private int size;
