@@ -16,13 +16,13 @@ import static algs.sorting.SortUtil.swap;
 public class QuickSelect {
 
     public static <T extends Comparable<? super T>> T select(T[] a, int k) {
-        shuffle(a); // quick-select uses ~1/2N^2 compares in the worst
+        shuffle(a); // quick-select uses ~(1/2)N^2 compares in the worst
                     // case, but random shuffle provide a probabilistic
                     // guarantee
         int lo = 0, hi = a.length - 1;
         int j = 0;
 
-        while (hi > lo) {
+        while (hi >= lo) {
             j = partition(a, lo, hi);
             if (j < k)
                 lo = j + 1;
@@ -36,6 +36,9 @@ public class QuickSelect {
     }
 
     private static <T extends Comparable<? super T>> int partition(T[] a, int lo, int hi) {
+        if (hi == lo)
+            return lo;
+
         int i = lo, j = hi + 1;
 
         while (true) {
@@ -57,7 +60,9 @@ public class QuickSelect {
 
     public static void main(String[] args) {
         Integer[] src = {0, 9, 4, 5, 1, 8, 7, 2, 6, 3};
+        assert select(src, 0) == 0;
         assert select(src, 3) == 3;
+        assert select(src, 9) == 9;
     }
 
 }
