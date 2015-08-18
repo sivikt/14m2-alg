@@ -8,10 +8,10 @@ import java.util.Map;
 /**
  * """4-SUM.
  *    Given an array a[] of N integers, the 4-SUM problem is to determine if there exist distinct indices i, j, k, and l
- *    such that a[i]+a[j]=a[k]+a[l]. Design an algorithm for the 4-SUM problem that takes time proportional to N2 (under
+ *    such that a[i]+a[j]=a[k]+a[l]. Design an algorithm for the 4-SUM problem that takes time proportional to N^2 (under
  *    suitable technical assumptions).
  *
- *    Hint: create a hash table with (N2) key-value pairs.
+ *    Hint: create a hash table with (N^2) key-value pairs.
  * """ (from materials by Robert Sedgewick)
  *
  * @author Serj Sintsov
