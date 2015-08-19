@@ -56,16 +56,6 @@ public class UnorderedFixedArrayPQ<Key> implements PriorityQueue<Key> {
     }
 
     @Override
-    public void increaseKey(Key key) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void decreaseKey(Key key) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Iterator<Key> iterator() {
         throw new UnsupportedOperationException();
     }

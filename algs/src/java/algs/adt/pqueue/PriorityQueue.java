@@ -9,10 +9,6 @@ import algs.adt.queue.Queue;
  */
 public interface PriorityQueue<Key> extends Queue<Key> {
 
-    void increaseKey(Key key);
-
-    void decreaseKey(Key key);
-
     Key peek();
 
 }

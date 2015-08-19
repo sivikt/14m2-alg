@@ -52,8 +52,7 @@ public class FixedArrayBinaryHeapPQ<Key> implements PriorityQueue<Key>
         checkCapacityForGet();
         Key highest = pq[1];
         swap(1, size);
-        size -= 1;
-        pq[size+1] = null; // prevent loitering
+        pq[size--] = null; // prevent loitering
         sink(1);
         return highest;
     }
@@ -65,16 +64,6 @@ public class FixedArrayBinaryHeapPQ<Key> implements PriorityQueue<Key>
     public Key peek() {
         checkCapacityForGet();
         return pq[1];
-    }
-
-    @Override
-    public void increaseKey(Key key) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void decreaseKey(Key key) {
-        throw new UnsupportedOperationException();
     }
 
     @Override
