@@ -1,7 +1,12 @@
 package algs.assignments.jam;
 
+import algs.adt.Pair;
 import algs.sorting.QuickSort;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import static algs.adt.Pair.of;
 import static java.lang.String.format;
 import static algs.assignments.jam.TaxicabNumbers.Cubes.texicab;
 
@@ -25,7 +30,7 @@ public class TaxicabNumbers {
     static class Cubes implements Comparable<Cubes> {
         final int a;
         final int b;
-        final int sum3;
+        final long sum3;
 
         public Cubes(int a, int b) {
             this.a = a;
@@ -44,12 +49,17 @@ public class TaxicabNumbers {
         
         @Override
         public int compareTo(Cubes that) {
-            return (that != null) ? (this.sum3 - that.sum3) : 1;
+            if (that == null || this.sum3 > that.sum3)
+                return 1;
+            else if (this.sum3 < that.sum3)
+                return -1;
+            else
+                return 0;
         }
     }
 
 
-    public static void version1(int N) {
+    public static Collection<Pair<Cubes, Cubes>> Ta_sorting(int N) {
         int size = N*(N-1) >> 1;
         Cubes[] sums3 = new Cubes[size];
 
@@ -60,15 +70,24 @@ public class TaxicabNumbers {
 
         QuickSort.sort(sums3);
 
-        for (int i = 0; i < size-1; i++)
-            if (texicab(sums3[i], sums3[i+1])) {
-                System.out.print(sums3[i] + " & " + sums3[i + 1]);
-            }
+        Collection<Pair<Cubes, Cubes>> result = new ArrayList<>();
+        for (int i = 0; i < size-1; i++) {
+            if (texicab(sums3[i], sums3[i + 1]))
+                result.add(of(sums3[i], sums3[i + 1]));
+        }
+
+        return result;
     }
 
-    
+    public static Collection<Pair<Cubes, Cubes>> Ta_heap(int N) {
+
+        return null;
+    }
+
+
     // testing 
     public static void main(String[] args) {
-        version1(12);
+        System.out.println(Ta_sorting(128));
+        System.out.println(Ta_heap(128));
     }
 }
