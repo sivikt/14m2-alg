@@ -40,7 +40,7 @@ import static algs.sorting.SortUtil.*;
  */
 public class KnuthShuffle {
 
-    public static <T extends Comparable<? super T>> void shuffle(T[] a) {
+    public static <T> void shuffle(T[] a) {
         for (int i = 0; i < a.length; i++) {
             int r = StdRandom.uniform(i + 1);
             swap(a, i, r);
