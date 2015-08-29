@@ -4,8 +4,11 @@ import algs.sorting.QuickSort;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static algs.sorting.SortUtil.isSorted;
+import static java.lang.String.format;
 
 /**
  * """Selection in two sorted arrays.
@@ -34,63 +37,79 @@ public class SelectionInTwoSortedArrays {
         if (a.length != b.length)
             throw new IllegalArgumentException("Input arrays must be of equal sizes");
 
-        T[] le = a,
-            gt = b;
-        int k  = 0,
-            lelo = 0,
-            lehi = a.length-1,
-            gtlo = 0,
-            gthi = lehi;
+        int alo = 0,
+            ahi = a.length-1,
+            blo = 0,
+            bhi = ahi;
 
         while (true) {
-            assert lehi - lelo == gthi - gtlo;
+            assert ahi - alo == bhi - blo;
 
-            if (le[ lehi ].compareTo(gt[ gtlo ]) <= 0)
-                return le[ lehi ];
-            else if (gt[ gthi ].compareTo(le[ lelo ]) <= 0)
-                return gt[ gthi ];
+            if (a[ ahi ].compareTo(b[ blo ]) <= 0)
+                return a[ ahi ];
+            else if (b[ bhi ].compareTo(a[ alo ]) <= 0)
+                return b[ bhi ];
 
-            int N = gthi - gtlo + 1;
-            int lemid = lelo + (lehi - lelo)/2;
-            int gtmid = gtlo + (gthi - gtlo)/2;
-
-            int cmp = le[ lemid ].compareTo(gt[ gtmid ]);
-            if (cmp == 0)
-                return le[ lemid ];
-
-            if (cmp > 0) {
-                T[] t = le;
-                le = gt;
-                gt = t;
-            }
-
-            k += lemid - lelo + 1;
-            if (k == a.length)
-                return le[ lemid ];
-
+            int N = ahi - alo + 1;
+            int amid = alo + (ahi - alo)/2;
+            int bmid = blo + (bhi - blo)/2;
             boolean odd = (N & 1) == 1;
-            if (le[ lemid ].compareTo(gt[ gtmid-1 ]) >= 0) {
-                return odd ? le[ lemid ] : gt[ gtmid ];
+
+            if (amid == alo)
+                return odd ? a[ amid ] : max(a[ amid ], b[ bmid ]);
+
+            int cmp = a[ amid ].compareTo(b[ bmid ]);
+            if (cmp == 0) {
+                return a[ amid ];
             }
-            else { // binary search for the place of le[mid]
-                int i = gtlo,
-                    j = odd ? gtmid - 1 : gtmid,
-                    m = i + (j - i)/2;
+            else if (cmp > 0) {
+                T[] t = a;
+                a = b;
+                b = t;
 
-                while (i < j) {
-                    int c = le[ lemid ].compareTo(gt[m]);
-                    if (c >= 0) i = m + 1;
-                    else        j = m;
-                }
+                int q = amid;
+                amid = bmid;
+                bmid = q;
 
-                // i - is the index of the first element > le[mid]
-                k += i - gtlo;
-                lelo = lemid + 1;
-                lehi = lelo + (odd ? gtmid-i : gtmid-i+1);
-                gtlo = i;
-                gthi = gtlo + lehi-lelo;
+                blo = alo;
+            }
+
+            assert bmid-1 >= 0;
+            if (a[ amid ].compareTo(b[ bmid-1 ]) >= 0) {
+                return odd ? a[ amid ] : min(a[ amid+1 ], b[ bmid ]);
+            }
+            else { // binary search for the place of a[mid]
+                int i = searchForPlace(b, a[ amid ], blo, (odd ? bmid - 1 : bmid));
+
+                // i - is the index of the first element > a[mid]
+                alo = amid + 1;
+                ahi = amid + (odd ? bmid-i : bmid-i+1);
+                blo = i;
+                bhi = blo + ahi - alo;
             }
         }
+    }
+
+    private static <T extends Comparable<? super T>> int searchForPlace(T[] a, T x, int lo, int hi) {
+        int i = lo,
+            j = hi;
+
+        while (i < j) {
+            int m = i + (j - i)/2;
+            int c = x.compareTo(a[m]);
+            if (c >= 0) i = m + 1;
+            else        j = m;
+        }
+
+        return i;
+    }
+
+    private static <T extends Comparable<? super T>> T min(T a, T b) {
+        return a.compareTo(b) >= 0 ? b : a;
+    }
+
+    private static <T extends Comparable<? super T>> T max(T a, T b) {
+        return a.compareTo(b) >= 0 ? a : b;
     }
 
     /**
@@ -130,6 +149,7 @@ public class SelectionInTwoSortedArrays {
             System.arraycopy(b, j, m, l, b.length-j);
 
         assert isSorted(m, 0, N - 1);
+        //System.out.println(Arrays.toString(m));
 
         return m[k-1];
     }
@@ -137,20 +157,33 @@ public class SelectionInTwoSortedArrays {
 
     // testing
     public static void main(String args[]) {
-        final int N1 = 2;
-        final int N2 = 2;
+        testVersion1();
+    }
 
-        Integer[] a = generate(N1);
-        Integer[] b = generate(N2);
-        System.out.println(Arrays.toString(a));
-        System.out.println(Arrays.toString(b));
+    private static void testVersion1() {
+        ExecutorService tpool = Executors.newFixedThreadPool(4);
 
-        Integer kth1 = select_slow(a, b, a.length);
-        Integer kth2 = version1(a, b);
+        for (int i = 1; i <= 1000; i++) {
+            for (int j = 0; j < 10000; j++) {
+                final int size = i;
+                //System.out.println("size="+size);
 
+                tpool.execute(() -> {
+                    Integer[] a = generate(size);
+                    Integer[] b = generate(size);
+                    //System.out.println(Arrays.toString(a));
+                    //System.out.println(Arrays.toString(b));
 
-        System.out.println(kth1);
-        System.out.println(kth2);
+                    Integer kth1 = select_slow(a, b, a.length);
+                    Integer kth2 = version1(a, b);
+                    assert kth1.equals(kth2) : format(
+                        "Incorrect values [size=%s]: %s, %s\n%s\n%s", size, kth1, kth2, Arrays.toString(a), Arrays.toString(b)
+                    );
+                });
+            }
+        }
+
+        tpool.shutdown();
     }
 
     private static Integer[] generate(int size) {
