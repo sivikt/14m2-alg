@@ -9,7 +9,7 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 /**
- * """Dynamic median.
+ * """.
  *    Design a data type that supports insert in logarithmic time, find-the-median
  *    in constant time, and remove-the-median in logarithmic time.
  *
