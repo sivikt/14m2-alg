@@ -8,8 +8,7 @@ import static algs.adt.symboltable.impl.SymbolTableTest.*;
 import static algs.adt.symboltable.impl.SymbolTableTest.intGen;
 
 /**
- * Hash table based implementation of dictionary. Hash table is implemented
- * using closed hashing with separate chaining collisions resolution.
+ * Hash table based implementation of dictionary.
  *
  * @author Serj Sintsov
  */
