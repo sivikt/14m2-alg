@@ -1,4 +1,4 @@
-resources/test/algs4-data
-src/java/algs/assignments/collinearp/testing
-src/java/algs/assignments/npazzle/testing
-src/java/algs/assignments/wordnet/testing
+src/test/resources/algs4/algs4-data
+src/main/java/algs/assignments/collinearp/testing
+src/main/java/algs/assignments/npazzle/testing
+src/main/java/algs/assignments/wordnet/testing

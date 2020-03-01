@@ -1,11 +1,8 @@
 *.class
 nohup.out
 # Package Files #
-*.jar
 *.war
 *.ear
 *.iml
 .idea
 out
-
-algs/algs4-data
