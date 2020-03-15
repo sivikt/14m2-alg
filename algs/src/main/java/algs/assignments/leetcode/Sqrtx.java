@@ -60,6 +60,10 @@ class Sqrtx {
     }
 
 
+    /**
+     * slightly changed (variables rearranging) to be Babylonian method
+     * https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method
+     */
     public int mySqrt_v3(int x) {
         if (x < 2)
             return x;
