@@ -1,4 +1,4 @@
-package algs.assignments.leetcode;// Implement a basic calculator to evaluate a simple expression string.
+package algs.assignments.jam;// Implement a basic calculator to evaluate a simple expression string.
 
 import java.util.LinkedList;
 import java.util.Queue;

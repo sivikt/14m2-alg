@@ -1,4 +1,4 @@
-package algs.assignments.leetcode;// Implement int sqrt(int x).
+package algs.assignments.jam;// Implement int sqrt(int x).
 
 /**
  *  Compute and return the square root of x, where

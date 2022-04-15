@@ -1,4 +1,4 @@
-package algs.assignments.leetcode;
+package algs.assignments.jam;
 
 /**
  * Given a sorted linked list, delete all nodes that have duplicate numbers,

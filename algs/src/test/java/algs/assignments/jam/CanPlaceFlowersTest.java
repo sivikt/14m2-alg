@@ -1,4 +1,4 @@
-package algs.assignments.leetcode;
+package algs.assignments.jam;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;

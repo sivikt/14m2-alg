@@ -1,4 +1,4 @@
-package algs.assignments.leetcode;
+package algs.assignments.jam;
 
 import java.util.Arrays;
 import java.util.Comparator;

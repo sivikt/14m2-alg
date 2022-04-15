@@ -1,4 +1,4 @@
-package algs.assignments.leetcode;
+package algs.assignments.jam;
 
 /**
  * Suppose you have a long flowerbed in which some of the plots are planted and some are not.

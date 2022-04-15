@@ -1,4 +1,4 @@
-package algs.assignments.leetcode;
+package algs.assignments.jam;
 
 /**
  * We are given a list nums of integers representing a list compressed with run-length encoding.
