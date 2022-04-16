@@ -1,0 +1,14 @@
+if [ -z "$1" ]; then
+    echo "Host address required"
+    exit 1
+fi
+
+if [ -z "$2" ]; then
+    echo "Token value required"
+    exit 1
+fi
+
+0</dev/null ssh -i ~/key user@$1 '
+    sudo sed -i.sed.bak "s|initial_token: 0|initial_token: '$2'|g" /etc/dse/cassandra/cassandra.yaml
+'
+wait

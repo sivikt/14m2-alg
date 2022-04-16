@@ -1,0 +1,8 @@
+0</dev/null ssh -i ~/key user@$1 << 'ENDSSH'
+    cass_env_opts=/etc/dse/cassandra/cassandra-env.sh
+    sudo sed -i.sed.bak 's|#MAX_HEAP_SIZE="4G"|MAX_HEAP_SIZE="8G"|g' ${cass_env_opts}
+    sudo sed -i.sed.bak 's|#HEAP_NEWSIZE="800M"|HEAP_NEWSIZE="3200M"|g' ${cass_env_opts}
+    sudo sed -i.sed.bak 's|JVM_OPTS="$JVM_OPTS -ea"|#JVM_OPTS="$JVM_OPTS -ea"|g' ${cass_env_opts}
+    sudo sed -i.sed.bak 's|JVM_OPTS="$JVM_OPTS -Denable-old-dse-state=true"|#JVM_OPTS="$JVM_OPTS -Denable-old-dse-state=true"|g' ${cass_env_opts}
+ENDSSH
+wait

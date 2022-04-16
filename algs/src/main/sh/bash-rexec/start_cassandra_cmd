@@ -1,0 +1,4 @@
+0</dev/null ssh -i ~/key user@$1 '
+    sudo /etc/init.d/dse start
+'
+wait
