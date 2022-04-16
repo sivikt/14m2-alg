@@ -30,7 +30,7 @@
 // 1 <= chips[i] <= 10^9
 
 
-class Solution {
+class PlayWithChips {
     public int minCostToMoveChips(int[] chips) {
         int o = 0;
         

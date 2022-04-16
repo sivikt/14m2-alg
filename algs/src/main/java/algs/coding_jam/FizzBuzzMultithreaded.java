@@ -1,4 +1,6 @@
-/*
+package algs.coding_jam;
+
+/**
 Write a program that outputs the string representation of numbers from 1 to n, however:
 
 If the number is divisible by 3, output "fizz".
@@ -23,11 +25,14 @@ Thread C will call fizzbuzz() to check for divisibility of 3 and 5 and outputs f
 Thread D will call number() which should only output the numbers.
 */
 
-class FizzBuzz {
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.IntConsumer;
+
+class FizzBuzzMultithreaded {
     private final int n;
     private AtomicInteger x = new AtomicInteger(1);
     
-    public FizzBuzz(int n) {
+    public FizzBuzzMultithreaded(int n) {
         this.n = n;
     }
 

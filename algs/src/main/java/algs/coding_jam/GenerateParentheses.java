@@ -96,7 +96,7 @@ class GenerateParentheses {
             }
             else if (curr.numClose <= curr.numOpen)
             {
-                str[str.length-1] = // TBD
+                // str[str.length-1] = // TBD
             }
         }
         
