@@ -1,1 +1,1 @@
-Simple script to plot statistics collected by sar
+Simple script to plot statistics collected by sar using Python matplotlib
