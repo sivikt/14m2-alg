@@ -28,7 +28,7 @@ class Sqrtx {
         while (l < r) 
         {
             int mid = l + (r-l+1)/2;
-            int mid2 = (int)x/mid;
+            int mid2 = x/mid;
                        
             if (mid2 == mid)
                 return mid;
