@@ -1,0 +1,1 @@
+Simple script to plot statistics collected by sar
