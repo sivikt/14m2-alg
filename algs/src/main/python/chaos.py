@@ -13,7 +13,7 @@ def ivp_chaos():
 
     time.append(101)
 
-    print values
+    print(values)
 
     fig = plt.figure()
     fig.canvas.set_window_title('ivp chaos')
