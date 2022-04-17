@@ -2,3 +2,4 @@ target
 src/test/resources/algs4/algs4-data
 .ipynb_checkpoints
 py3env
+.py38
