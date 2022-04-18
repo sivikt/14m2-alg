@@ -4,12 +4,13 @@
 
 import sys
 import math
-import Image
 import random
-
 from time import gmtime, strftime
-from ktransforms.filter import applyFilter
-from ktransforms.kernels import GAUSSIAN_BLUR
+
+from PIL import Image
+
+from ..ktransforms.filter import applyFilter
+from ..ktransforms.kernels import GAUSSIAN_BLUR
 
 # disjoint-set forests using union-by-rank and path compression (sort of)
 class UnionElem:
@@ -25,7 +26,7 @@ class UnionFindSet:
         self.segmentsCount = elemsCount
         self.elems = []
         
-        for i in xrange(0, elemsCount - 1):
+        for i in range(elemsCount - 1):
             self.elems.append( UnionElem( 0, i, 1 ) )
  
     def __str__( self):
@@ -78,7 +79,7 @@ def findSegments( img, c, minSize, colorDistFunc ):
     # smooth input image
     inData = applyFilter( img, GAUSSIAN_BLUR )
     
-    outData = [0 for x in xrange( len(inData) )]
+    outData = [0 for x in range( len(inData) )]
 
     width = img.size[0]
     height = img.size[1]
@@ -86,8 +87,8 @@ def findSegments( img, c, minSize, colorDistFunc ):
       
     # build graph
     edges = []
-    for y in xrange(0, height - 1):
-        for x in xrange(0, width - 1):
+    for y in range(height - 1):
+        for x in range(width - 1):
             offset = y * width + x
           
             if x < width - 2:
@@ -106,10 +107,10 @@ def findSegments( img, c, minSize, colorDistFunc ):
                 w = colorDistFunc( inData[ offset ], inData[ offset - width + 1 ] )
                 edges.append( Edge( offset, offset - width + 1, w ) )
     
-    print 'graph building was finished! edges count ', len(edges)
+    print('graph building was finished! edges count ', len(edges))
         
     edges.sort(key=lambda edge: edge.w, reverse=False)        
-    print 'edges sorting was finished!'
+    print('edges sorting was finished!')
      
     # find unions 
     # make a disjoint-set forest
@@ -119,7 +120,7 @@ def findSegments( img, c, minSize, colorDistFunc ):
         
     # init thresholds
     thresholds = []
-    for i in xrange(0, pixelsCount):
+    for i in range(pixelsCount):
         thresholds.append( thresholdFunc( 1, c ) )
 
     for i in (0, len(edges) - 1):
@@ -135,9 +136,9 @@ def findSegments( img, c, minSize, colorDistFunc ):
                 a = unionFindSet.find( a )
                 thresholds[ a ] = edge.w + thresholdFunc( unionFindSet.size( a ), c )
     
-    print 'segmentation was finished! segments count ', unionFindSet.segmentsCount
+    print('segmentation was finished! segments count ', unionFindSet.segmentsCount)
          
-    for i in xrange(0, len(edges) - 1):
+    for i in range(len(edges) - 1):
         a = unionFindSet.find( edges[ i ].a )
         b = unionFindSet.find( edges[ i ].b )
         
@@ -146,32 +147,32 @@ def findSegments( img, c, minSize, colorDistFunc ):
             
             unionFindSet.join( a, b )
             
-    print 'post process small components! final segments count ', unionFindSet.segmentsCount
+    print('post process small components! final segments count ', unionFindSet.segmentsCount)
      
     # pick random colors for each component
     colors = []
-    for i in xrange(0, pixelsCount - 1):
+    for i in range(pixelsCount - 1):
         colors.append( (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)) )
   
-    for y in xrange(0, height - 1):
-        for x in xrange(0, width - 1):
+    for y in range(height - 1):
+        for x in range(width - 1):
             offset = y * width + x
             comp = unionFindSet.find( offset )
             outData[ offset ] = colors[ comp ]
     
-    print 'segments colorized finished!'
+    print('segments colorized finished!')
              
     return outData
     
     
 def main():
     if len( sys.argv ) != 4:
-        print 'use options: c min_size source_image'
+        print('use options: c min_size source_image')
         exit()
  
     try:
         sourceImg = Image.open( sys.argv[3] )  
-        print 'image: ', sourceImg.format, "%dx%d" % sourceImg.size, sourceImg.mode, sourceImg.getbands()
+        print('image: ', sourceImg.format, "%dx%d" % sourceImg.size, sourceImg.mode, sourceImg.getbands())
  
         outputData = findSegments( sourceImg, 
                                    int( sys.argv[1], 10 ), 
@@ -182,22 +183,27 @@ def main():
         outputImg.putdata( outputData )
             
         outputImg.save( strftime("%a_%d_%b_%Y_%H:%M:%S", gmtime()) + sys.argv[3], 
-                        quality = 100 );
+                        quality = 100 )
         
-        print 'finish!'
+        print('finish!')
     except IOError:
-        print 'no such file ' + sys.argv[3]
+        print('no such file ' + sys.argv[3])
         exit()
     except Exception:
-        print 'use options: source_image'
+        print('use options: source_image')
         exit()
  
  
 if __name__ == "__main__":
  
     try:
+        """Psyco is a historical project and only works on Python <= 2.6 on 32-bit x86 Intel CPUs. See also PyPy.
+           Psyco shows that it is possible to execute Python code at speeds approaching that of fully compiled languages,
+           by “specialization”. This extension module for the unmodified interpreter accelerates user programs with
+           little or not change in their sources, by a factor that can be very interesting (2-10 times is common).
+        """
         import psyco
-        print 'on psyco'
+        print('on psyco')
         psyco.full()
     except ImportError:
         pass
