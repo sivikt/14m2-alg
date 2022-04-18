@@ -6,7 +6,7 @@ from time import gmtime, strftime
 
 from PIL import Image
 
-import kernels
+from . import kernels
 
 
 def applyFilter( img, kernel ):
@@ -35,7 +35,7 @@ def applyFilter( img, kernel ):
                         (pixelPosY < 0) or (pixelPosY >= height)): 
                         continue
 
-                    inPix = width * pixelPosY + pixelPosX
+                    inPix = int(width * pixelPosY + pixelPosX)
                     
                     r = inData[ inPix ][0]
                     g = inData[ inPix ][1]
@@ -79,7 +79,7 @@ def applyFilter( img, kernel ):
 def main():
     if len( sys.argv ) != 3:
         print('use options: [us | s | gr | so | ed | se | sle | lb | bb | gb] source_image')
-        exit()
+        exit(1)
  
     try:
         sourceImg = Image.open( sys.argv[2] )  
@@ -100,10 +100,10 @@ def main():
         print('finish!')
     except IOError:
         print('no such file ' + sys.argv[2])
-        exit()
+        exit(1)
     except Exception:
         print('use options: [us | s | ed | bb | gb] source_image')
-        exit()
+        exit(1)
  
  
 if __name__ == "__main__":

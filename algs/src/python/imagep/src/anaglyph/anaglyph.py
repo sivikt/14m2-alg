@@ -35,7 +35,7 @@ def anaglyph( leftImg, rightImg, methodMxs ):
 def main():
     if len( sys.argv ) != 4:
         print('use options: a_type src_img_left src_img_right')
-        exit()
+        exit(1)
  
     try:
         srcImgLeft = Image.open( sys.argv[2] ) 
@@ -54,10 +54,10 @@ def main():
         print('finish!')
     except IOError:
         print('no such file ' + sys.argv[2] + ' or ' + sys.argv[3])
-        exit()
+        exit(1)
     except Exception:
         print('use options: src_img_left src_img_right')
-        exit()
+        exit(1)
  
  
 if __name__ == "__main__":

@@ -4,13 +4,16 @@
 
 import sys
 import math
+import pathlib
 import random
+import traceback
 from time import gmtime, strftime
 
 from PIL import Image
 
-from ..ktransforms.filter import applyFilter
-from ..ktransforms.kernels import GAUSSIAN_BLUR
+from ktransforms.filter import applyFilter
+from ktransforms.kernels import GAUSSIAN_BLUR
+
 
 # disjoint-set forests using union-by-rank and path compression (sort of)
 class UnionElem:
@@ -69,7 +72,7 @@ class Edge:
 
 
 # dissimilarity measure between pixels
-def simplePixelDist( rgb1, rgb2 ):
+def simple_pixel_dist(rgb1, rgb2):
     return math.sqrt( math.pow( rgb1[0] - rgb2[0], 2 ) + 
                       math.pow( rgb1[1] - rgb2[1], 2 ) + 
                       math.pow( rgb1[2] - rgb2[2], 2 ) )
@@ -165,33 +168,30 @@ def findSegments( img, c, minSize, colorDistFunc ):
     return outData
     
     
-def main():
-    if len( sys.argv ) != 4:
-        print('use options: c min_size source_image')
-        exit()
- 
+def main(num_components: int, min_size: int, img_path: str):
     try:
-        sourceImg = Image.open( sys.argv[3] )  
-        print('image: ', sourceImg.format, "%dx%d" % sourceImg.size, sourceImg.mode, sourceImg.getbands())
+        img_path = pathlib.Path(img_path)
+        source_img = Image.open( img_path )
+        print('image: ', source_img.format, "%dx%d" % source_img.size, source_img.mode, source_img.getbands())
  
-        outputData = findSegments( sourceImg, 
-                                   int( sys.argv[1], 10 ), 
-                                   int( sys.argv[2], 10 ), 
-                                   simplePixelDist )
-        outputImg = Image.new( 'RGB', sourceImg.size )
+        output_data = findSegments(source_img,
+                                  num_components,
+                                  min_size,
+                                  simple_pixel_dist)
+        output_img = Image.new( 'RGB', source_img.size )
      
-        outputImg.putdata( outputData )
+        output_img.putdata( output_data )
             
-        outputImg.save( strftime("%a_%d_%b_%Y_%H:%M:%S", gmtime()) + sys.argv[3], 
-                        quality = 100 )
+        output_img.save(img_path.parent / f"{strftime('%a_%d_%b_%Y_%H-%M-%S', gmtime())}_{img_path.name}", quality=100)
         
         print('finish!')
     except IOError:
-        print('no such file ' + sys.argv[3])
-        exit()
+        print('no such file ' + img_path)
+        traceback.print_exc()
+        exit(1)
     except Exception:
-        print('use options: source_image')
-        exit()
+        traceback.print_exc()
+        exit(1)
  
  
 if __name__ == "__main__":
@@ -207,5 +207,9 @@ if __name__ == "__main__":
         psyco.full()
     except ImportError:
         pass
- 
-    main()    
+
+    if len( sys.argv ) != 4:
+        print('use options: c min_size source_image')
+        exit(1)
+
+    main(num_components=int(sys.argv[1], 10), min_size=int(sys.argv[2], 10), img_path=sys.argv[3])
