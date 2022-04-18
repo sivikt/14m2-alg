@@ -1,4 +1,4 @@
-# author Serj Sintsov <ssivikt@gmail.com>, Public Domain 
+# author Serj Sintsov <ssivikt@gmail.com>, 2009, Public Domain
 
 import sys
 import time
@@ -13,7 +13,7 @@ def progress(start=0, bar_width=30):
     if start < 0:
         start = 0
 
-    for percent in xrange(start, 101):
+    for percent in range(start, 101):
         marks = math.floor(bar_width * (percent / 100.0))
         spaces = math.floor(bar_width - marks)
 

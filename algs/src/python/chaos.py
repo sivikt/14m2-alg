@@ -2,10 +2,13 @@
 
 from matplotlib import pyplot as plt
 
+"""
+Chaotic series function, 2016
+"""
 def ivp_chaos():
     f0 = 0.8323
     f = lambda xt: 0.5 + 1.5*xt - 2.0*xt*xt*xt
-    time = range(100)
+    time = list(range(100))
 
     values = [f0]
     for _ in time:
@@ -13,10 +16,7 @@ def ivp_chaos():
 
     time.append(101)
 
-    print(values)
-
     fig = plt.figure()
-    fig.canvas.set_window_title('ivp chaos')
     ax = fig.add_subplot(111)
 
     ax.plot(time, values)
@@ -27,6 +27,7 @@ def ivp_chaos():
     ax.xaxis.set_ticks_position('bottom')
 
     plt.show()
+
 
 if __name__ == '__main__':
     ivp_chaos()

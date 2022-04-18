@@ -2,7 +2,8 @@
 # author Serj Sintsov <ssivikt@gmail.com>, 2014 Public Domain 
 
 import sys
-from Tkinter import *
+from tkinter import *
+
 
 class TkDraw(object):
     def __init__(self):

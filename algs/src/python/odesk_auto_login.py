@@ -1,6 +1,6 @@
 #!/usr/bin/python2
 # Performs login onto odesk.com
-# author Serj Sintsov <ssivikt@gmail.com>, 2013 Public Domain.
+# author Serj Sintsov <ssivikt@gmail.com>, 2010-2013 Public Domain.
 
 import mechanize
 

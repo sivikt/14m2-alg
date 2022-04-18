@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-# author Serj Sintsov <ssivikt@gmail.com>, Public Domain.
+# author Serj Sintsov <ssivikt@gmail.com>, 2010, Public Domain.
 
 
-"""This srcipt adds key-value pair line to the file encrypted by GPG 
+"""This script adds key-value pair line to the file encrypted by GPG
 """
 import os
 import sys
@@ -20,7 +20,7 @@ RES_AND_PASS_SEPARATOR = " - "
 """
 def print_process_out(p):
     for line in p.stdout.readlines():
-        print line
+        print(line)
 
 """
 """
