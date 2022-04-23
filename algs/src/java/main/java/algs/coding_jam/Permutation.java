@@ -19,7 +19,7 @@ import static algs.sorting.ShellSort.sort;
 public class Permutation {
 
     /**
-     * Sort using subquadratic algorithm (shell sort) and then loop and compare.
+     * Sort using sub-quadratic algorithm (shell sort) and then loop and compare.
      */
     public static boolean isPermute(Integer[] a, Integer[] b) {
         if (a.length != b.length)

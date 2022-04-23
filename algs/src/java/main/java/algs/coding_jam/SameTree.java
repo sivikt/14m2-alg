@@ -1,46 +1,45 @@
-// Given two binary trees, write a function to check if they are the same or not.
+package algs.coding_jam;
 
-// Two binary trees are considered the same if they are structurally identical and the nodes have the same value.
+/*
+Given two binary trees, write a function to check if they are the same or not.
 
-// Example 1:
+Two binary trees are considered the same if they are structurally identical and the nodes have the same value.
 
-// Input:     1         1
-//           / \       / \
-//          2   3     2   3
+Example 1:
 
-//         [1,2,3],   [1,2,3]
+Input:     1         1
+       / \       / \
+      2   3     2   3
 
-// Output: true
-// Example 2:
+     [1,2,3],   [1,2,3]
 
-// Input:     1         1
-//           /           \
-//          2             2
+Output: true
+Example 2:
 
-//         [1,2],     [1,null,2]
+Input:     1         1
+       /           \
+      2             2
 
-// Output: false
-// Example 3:
+     [1,2],     [1,null,2]
 
-// Input:     1         1
-//           / \       / \
-//          2   1     1   2
+Output: false
+Example 3:
 
-//         [1,2,1],   [1,1,2]
+Input:     1         1
+       / \       / \
+      2   1     1   2
 
-// Output: false
+     [1,2,1],   [1,1,2]
 
+Output: false
+*/
 
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-class Solution {
+import algs.coding_jam.TreeNode;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+class SameTree {
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if (p == null || q == null)
             return p == q;

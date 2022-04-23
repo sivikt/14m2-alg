@@ -15,8 +15,6 @@ package algs.coding_jam;
 // Follow up: Recursive solution is trivial, could you do it iteratively?
 
 
-import algs.coding_jam.TreeNode;
-
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
