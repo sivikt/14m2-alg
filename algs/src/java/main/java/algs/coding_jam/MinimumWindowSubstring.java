@@ -13,6 +13,9 @@ If there is no such window in S that covers all characters in T, return the empt
 If there is such window, you are guaranteed that there will always be only one unique minimum window in S.
 */
 
+import java.util.HashSet;
+import java.util.Set;
+
 class MinimumWindowSubstring {
     public String minWindow(String s, String t) {
         if (s.length() < t.length())
