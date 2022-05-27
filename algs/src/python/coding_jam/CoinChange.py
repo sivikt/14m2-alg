@@ -87,6 +87,7 @@ class Solution:
         return self.change_rec(memo, amount, coins, len(coins) - 1)
 
     def change2(self, amount: int, coins: List[int]) -> int:
+        """very slow since calculate the same subtasks multiple times"""
         return self.change_rec_no_memo(amount, coins, len(coins) - 1)
 
     def change3(self, amount: int, coins: List[int]) -> int:
@@ -103,26 +104,23 @@ class Solution:
 
 class TestSolution(unittest.TestCase):
     def test_change(self):
-        assert Solution().change(amount=5, coins=[1, 2, 5]) == 4
-        assert Solution().change(amount=5, coins=[5]) == 1
-        assert Solution().change(amount=5, coins=[1]) == 1
-        assert Solution().change(amount=3, coins=[2, 5]) == 0
-        assert Solution().change(amount=5, coins=[2]) == 0
-        assert Solution().change(amount=500, coins=[3, 5, 7, 8, 9, 10, 11]) == 35502874
+        params = [
+            (5, [1, 2, 5], 4),
+            (5, [5], 1),
+            (5, [1], 1),
+            (3, [2, 5], 0),
+            (5, [2], 0),
+            (500, [3, 5, 7, 8, 9, 10, 11], 35502874)
+        ]
 
-        assert Solution().change2(amount=5, coins=[1, 2, 5]) == 4
-        assert Solution().change2(amount=5, coins=[5]) == 1
-        assert Solution().change2(amount=5, coins=[1]) == 1
-        assert Solution().change2(amount=3, coins=[2, 5]) == 0
-        assert Solution().change2(amount=5, coins=[2]) == 0
-        assert Solution().change2(amount=500, coins=[3, 5, 7, 8, 9, 10, 11]) == 35502874
+        for p in params:
+            assert Solution().change(amount=p[0], coins=p[1]) == p[2]
 
-        assert Solution().change3(amount=5, coins=[1, 2, 5]) == 4
-        assert Solution().change3(amount=5, coins=[5]) == 1
-        assert Solution().change3(amount=5, coins=[1]) == 1
-        assert Solution().change3(amount=3, coins=[2, 5]) == 0
-        assert Solution().change3(amount=5, coins=[2]) == 0
-        assert Solution().change3(amount=500, coins=[3, 5, 7, 8, 9, 10, 11]) == 35502874
+        for p in params:
+            assert Solution().change2(amount=p[0], coins=p[1]) == p[2]
+
+        for p in params:
+            assert Solution().change3(amount=p[0], coins=p[1]) == p[2]
 
 
 if __name__ == '__main__':
