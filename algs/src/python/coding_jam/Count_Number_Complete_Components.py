@@ -33,6 +33,8 @@ Constraints:
 """
 from typing import List
 
+from collections import deque
+
 
 class Solution:
     def _find_cc(self, cc, r):
@@ -77,3 +79,31 @@ class Solution:
                 r += 1
 
         return r
+
+    def countCompleteComponents2(self, n: int, edges: List[List[int]]) -> int:
+        graph = [[] for _ in range(n)]
+        for n1, n2 in edges:
+            graph[n1].append(n2)
+            graph[n2].append(n1)
+
+        def is_ccc(node):
+            queue = deque([node])
+            visited[node] = 1
+            total_nodes = 0
+            total_edges = 0
+            while queue:
+                cur = queue.popleft()
+                total_nodes += 1
+                total_edges += len(graph[cur])
+                for ch in graph[cur]:
+                    if not visited[ch]:
+                        queue.append(ch)
+                        visited[ch] = 1
+            return total_edges == total_nodes * (total_nodes - 1)
+
+        visited = [0] * n
+        res = 0
+        for i in range(n):
+            if not visited[i] and is_ccc(i):
+                res += 1
+        return res
