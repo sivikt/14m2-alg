@@ -1,0 +1,116 @@
+"""
+You are given an array of strings products and a string searchWord.
+
+Design a system that suggests at most three product names from products 
+after each character of searchWord is typed. Suggested products should have 
+common prefix with searchWord. If there are more than three products with a 
+common prefix return the three lexicographically minimums products.
+
+Return a list of lists of the suggested products after each character of searchWord is typed.
+
+
+Example 1:
+Input: products = ["mobile","mouse","moneypot","monitor","mousepad"], searchWord = "mouse"
+Output: [["mobile","moneypot","monitor"],["mobile","moneypot","monitor"],["mouse","mousepad"],["mouse","mousepad"],["mouse","mousepad"]]
+Explanation: products sorted lexicographically = ["mobile","moneypot","monitor","mouse","mousepad"].
+After typing m and mo all products match and we show user ["mobile","moneypot","monitor"].
+After typing mou, mous and mouse the system suggests ["mouse","mousepad"].
+
+Example 2:
+Input: products = ["havana"], searchWord = "havana"
+Output: [["havana"],["havana"],["havana"],["havana"],["havana"],["havana"]]
+Explanation: The only word "havana" will be always suggested while typing the search word.
+
+Constraints:
+    1 <= products.length <= 1000
+    1 <= products[i].length <= 3000
+    1 <= sum(products[i].length) <= 2 * 10^4
+    All the strings of products are unique.
+    products[i] consists of lowercase English letters.
+    1 <= searchWord.length <= 1000
+    searchWord consists of lowercase English letters.
+"""
+from typing import List
+
+
+class Solution:
+    def suggestedProducts_bruteforce(self, products: List[str], searchWord: str) -> List[List[str]]:
+        products.sort()
+        r = []
+
+        s = ''
+        for c in searchWord:
+            s += c
+            r.append([])
+            for p in products:
+                if p.startswith(s):
+                    r[-1].append(p)
+
+                if len(r[-1]) == 3:
+                    break
+        
+        return r
+
+
+    # using binary search    
+    def suggestedProducts(self, p: List[str], searchWord: str) -> List[List[str]]:
+        p.sort()
+        
+        r = []
+        s = ''
+        for c in searchWord:
+            s += c
+            i = bisect_left(p, s)
+            r.append([
+                x for x in p[i:i+3] if x.startswith(s)
+            ])
+        
+        return r
+    
+
+class Solution2:
+
+    def __init__(self):
+        def init_value():
+            v = collections.defaultdict(init_value)
+            v['?1'] = None
+            v['?2'] = None
+            v['?3'] = None
+            return v
+
+        self.root = collections.defaultdict(init_value)
+
+    def insert(self, word: str) -> None:
+        n = self.root
+        for c in word:
+            n = n[c]
+            if not n['?1']:
+                n['?1'] = word
+            elif not n['?2']:
+                n['?2'] = word
+            elif not n['?3']:
+                n['?3'] = word
+
+    def suggest(self, prefix: str) -> List[List[str]]:
+        n = self.root
+        r = []
+
+        for c in prefix:
+            n = n[c]
+            r.append([])
+            if n['?1']:
+                r[-1].append(n['?1'])
+                if n['?2']:
+                    r[-1].append(n['?2'])
+                    if n['?3']:
+                        r[-1].append(n['?3'])
+
+        return r
+
+    def suggestedProducts(self, p: List[str], s: str) -> List[List[str]]:
+        p.sort()
+
+        for w in p:
+            self.insert(w)
+        
+        return self.suggest(s)
